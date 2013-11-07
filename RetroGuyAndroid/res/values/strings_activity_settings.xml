@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_title_account_id">GamesDB Account ID</string>
+    <string name="pref_title_app_theme">App Theme</string>
+    <string-array name="pref_theme_names">
+        <item >Dark</item>
+        <item >Light</item>
+        <item >Light with Dark Actionbar</item>
+    </string-array>
+    <string-array name="pref_theme_values">
+        <item >default</item>
+        <item >light</item>
+        <item >lightdarkactionbar</item>
+    </string-array>
+
+</resources>
