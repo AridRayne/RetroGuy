@@ -16,6 +16,7 @@
          dismiss it.
     -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <ListPreference android:title="@string/pref_title_app_theme" android:key="appTheme" android:entryValues="@array/pref_theme_values" android:entries="@array/pref_theme_names"/>
+    <ListPreference android:title="@string/pref_title_app_theme" android:key="appTheme" android:entryValues="@array/pref_theme_values" android:entries="@array/pref_theme_names" android:defaultValue="default"/>
+    <Preference android:key="about" android:title="@string/pref_title_about" android:summary="@string/pref_about_value"/>
 
 </PreferenceScreen>

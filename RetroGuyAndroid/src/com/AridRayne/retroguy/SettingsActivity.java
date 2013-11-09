@@ -36,17 +36,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		String theme = sharedPrefs.getString("appTheme", "default");
-		if (theme.equals("light")) {
-			setTheme(com.roboguice.R.style.Theme_Sherlock_Light);
-		}
-		else if (theme.equals("lightdarkactionbar")) {
-			setTheme(com.roboguice.R.style.Theme_Sherlock_Light_DarkActionBar);
-		}
-		else {
-			setTheme(com.roboguice.R.style.Theme_Sherlock);
-		}
+		ThemeUtils.ApplyTheme(this);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -62,6 +52,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * device configuration dictates that a simplified, single-pane UI should be
 	 * shown.
 	 */
+	@SuppressWarnings("deprecation")
 	private void setupSimplePreferencesScreen() {
 		if (!isSimplePreferences(this)) {
 			return;

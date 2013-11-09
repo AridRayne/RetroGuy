@@ -23,5 +23,16 @@
         <item >light</item>
         <item >lightdarkactionbar</item>
     </string-array>
+    <string name="pref_title_about">About</string>
+    <string name="pref_about_value">
+        This app uses:<br/>
+        ActionBarSherlock (http://actionbarsherlock.com/),<br/>
+        roboguice (https://github.com/roboguice/roboguice),<br/>
+        simple xml (http://simple.sourceforge.net/).<br/>
+        And retrieves information from:<br/>
+        thegamesdb.net<br/>
+        App Icon: Games-Icon by Treetog Artwork<br/>
+        From http://www.iconarchive.com/show/i-icons-by-treetog/Games-icon.html
+        </string>
 
 </resources>

@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,6 +27,10 @@
         <activity
             android:name="com.AridRayne.retroguy.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.AridRayne.retroguy.AddPlatformActivity"
+            android:label="@string/title_activity_add_platform" >
         </activity>
     </application>
 

@@ -1,42 +1,30 @@
 package com.AridRayne.retroguy;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import roboguice.activity.RoboSherlockFragmentActivity;
-import roboguice.inject.InjectView;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.AridRayne.thegamesdb.lib.Data;
-import com.AridRayne.thegamesdb.lib.PlatformItem;
-import com.AridRayne.thegamesdb.lib.Utilities;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class MainActivity extends RoboSherlockFragmentActivity {
 
-	@InjectView (R.id.textView1) TextView tv1;
+	//@InjectView (R.id.textView1) TextView tv1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		String theme = sharedPrefs.getString("appTheme", "default");
-		if (theme.equals("light")) {
-			setTheme(com.roboguice.R.style.Theme_Sherlock_Light);
-		}
-		else if (theme.equals("lightdarkactionbar")) {
-			setTheme(com.roboguice.R.style.Theme_Sherlock_Light_DarkActionBar);
-		}
-		else {
-			setTheme(com.roboguice.R.style.Theme_Sherlock);
-		}
+		ThemeUtils.ApplyTheme(this);
 		super.onCreate(savedInstanceState);
+		//TODO: Testing addPlatform fragment.
 		setContentView(R.layout.activity_main);
-		new Task().execute(2);
+//		Intent addPlatform = new Intent(getApplicationContext(), AddPlatformActivity.class);
+		startActivity(new Intent(this, AddPlatformActivity.class));
+		/*AddPlatformFragment apf = new AddPlatformFragment();
+		FragmentManager man = getFragmentManager();
+		FragmentTransaction transaction = man.beginTransaction();
+		transaction.add(R.id.FrameLayout1, apf);
+		*/
+//		new Task().execute(2);
 	}
 
 	@Override
@@ -56,7 +44,7 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		return false;
 	}
 
-
+/*
 	private class Task extends AsyncTask<Integer, Object, Data<PlatformItem>> {
 
 		protected Data<PlatformItem> doInBackground(Integer... params) {
@@ -68,4 +56,5 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 			tv1.setText(StringEscapeUtils.unescapeXml(result.items.get(0).name));
 		}
 	}
+	*/
 }

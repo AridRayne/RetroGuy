@@ -3,5 +3,6 @@
 
     <string name="app_name">RetroGuy</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_add_platform">Add Platform</string>
 
 </resources>
