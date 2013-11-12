@@ -2,10 +2,14 @@ package com.AridRayne.retroguy;
 
 import roboguice.activity.RoboSherlockFragmentActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.AridRayne.thegamesdb.lib.GameItem;
+import com.AridRayne.thegamesdb.lib.Utilities;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class MainActivity extends RoboSherlockFragmentActivity {
 
@@ -14,17 +18,15 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.ApplyTheme(this);
+//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		//TODO: Testing addPlatform fragment.
 		setContentView(R.layout.activity_main);
-//		Intent addPlatform = new Intent(getApplicationContext(), AddPlatformActivity.class);
-		startActivity(new Intent(this, AddPlatformActivity.class));
-		/*AddPlatformFragment apf = new AddPlatformFragment();
-		FragmentManager man = getFragmentManager();
-		FragmentTransaction transaction = man.beginTransaction();
-		transaction.add(R.id.FrameLayout1, apf);
-		*/
-//		new Task().execute(2);
+		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		//TODO: Debugging code.
+//		if (dbHelper.numPlatforms() == 0)
+			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformFragment()).commit();
 	}
 
 	@Override
@@ -43,18 +45,22 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		}
 		return false;
 	}
+	
+	public class Task extends AsyncTask<Object, Integer, GameItem> {
 
-/*
-	private class Task extends AsyncTask<Integer, Object, Data<PlatformItem>> {
+		@Override
+		protected GameItem doInBackground(Object... params) {
+			Utilities utils = new Utilities();
+			return utils.GameFromID(1).items.get(0);
+			//return utils.PlatformFromID(2).items.get(0);
+		}
 
-		protected Data<PlatformItem> doInBackground(Integer... params) {
-			Utilities util = new Utilities();
-			return util.PlatformFromID(2);
+		@Override
+		protected void onPostExecute(GameItem result) {
+			DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+			dbHelper.addGame(result);
+			super.onPostExecute(result);
 		}
 		
-		protected void onPostExecute(Data<PlatformItem> result) {
-			tv1.setText(StringEscapeUtils.unescapeXml(result.items.get(0).name));
-		}
 	}
-	*/
 }
