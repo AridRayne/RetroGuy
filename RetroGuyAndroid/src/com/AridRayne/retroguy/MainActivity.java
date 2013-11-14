@@ -21,12 +21,11 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 //		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		super.onCreate(savedInstanceState);
-		//TODO: Testing addPlatform fragment.
 		setContentView(R.layout.activity_main);
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
 		//TODO: Debugging code.
 //		if (dbHelper.numPlatforms() == 0)
-			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformFragment()).commit();
+			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).commit();
 	}
 
 	@Override

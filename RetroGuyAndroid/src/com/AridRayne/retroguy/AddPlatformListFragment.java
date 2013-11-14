@@ -3,6 +3,7 @@ package com.AridRayne.retroguy;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.activity.RoboSherlockFragmentActivity;
 import roboguice.fragment.RoboSherlockListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import com.AridRayne.thegamesdb.lib.PlatformList;
 import com.AridRayne.thegamesdb.lib.PlatformListItems;
 import com.AridRayne.thegamesdb.lib.Utilities;
 
-public class AddPlatformFragment extends RoboSherlockListFragment {
+public class AddPlatformListFragment extends RoboSherlockListFragment {
 	PlatformList platforms;
 	Utilities utils;
 	List<Data<PlatformItem>> items;
@@ -33,6 +34,8 @@ public class AddPlatformFragment extends RoboSherlockListFragment {
 		PlatformArrayAdapter adapter = new PlatformArrayAdapter(getActivity(), R.layout.add_platform_row, items);
 		setListAdapter(adapter);
 		dbHelper = new DatabaseHelper(getActivity());
+		RoboSherlockFragmentActivity activity = (RoboSherlockFragmentActivity) getActivity();
+		activity.getSupportActionBar().setSubtitle("Add Platform");
 		AsyncTask<PlatformArrayAdapter, Integer, PlatformList> task = new GetPlatformList();
 		task.execute(adapter);
 	}

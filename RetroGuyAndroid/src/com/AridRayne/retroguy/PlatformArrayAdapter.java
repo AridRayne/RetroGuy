@@ -8,6 +8,7 @@ import com.AridRayne.thegamesdb.lib.Utilities;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class PlatformArrayAdapter extends ArrayAdapter<Data<PlatformItem>> {
 		utils = new Utilities();
 		this.context = context;
 		this.items = objects;
-		Picasso.with(context).setDebugging(true);
+//		Picasso.with(context).setDebugging(true);
 		layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
@@ -51,7 +52,7 @@ public class PlatformArrayAdapter extends ArrayAdapter<Data<PlatformItem>> {
 		else if (item.items.get(0).images.fanart != null) {
 			url += item.items.get(0).images.fanart.get(0).thumb;
 		}
-		Picasso.with(context).load(url).resize(128, 128).into(imageP);
+		Picasso.with(context).load(url).placeholder(R.drawable.ic_placeholder).fit().centerInside().into(imageP);
 		return row;
 	}
 
