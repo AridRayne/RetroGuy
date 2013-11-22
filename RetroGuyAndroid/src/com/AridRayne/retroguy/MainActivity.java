@@ -18,14 +18,15 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		ThemeUtils.ApplyTheme(this);
-//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
 		//TODO: Debugging code.
 //		if (dbHelper.numPlatforms() == 0)
-			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).commit();
+			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).addToBackStack(null).commit();
 	}
 
 	@Override
