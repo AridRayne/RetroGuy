@@ -67,7 +67,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 			}
 		});
 		addPlatformButton.setEnabled(false);
-		getSherlockActivity().setSupportProgressBarIndeterminate(true);
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 		new GetPlatform().execute(platform);
 	}
 	
@@ -96,7 +96,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 		protected void onPostExecute(Data<PlatformItem> result) {
 			setValues(result);
 			addPlatformButton.setEnabled(true);
-			getSherlockActivity().setSupportProgressBarIndeterminate(false);
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 }
