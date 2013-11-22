@@ -13,7 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.AridRayne.thegamesdb.lib.Data;
-import com.AridRayne.thegamesdb.lib.PlatformItem;
+import com.AridRayne.thegamesdb.lib.Platform;
 import com.AridRayne.thegamesdb.lib.Utilities;
 
 import roboguice.fragment.RoboSherlockFragment;
@@ -50,19 +50,19 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 			@Override
 			public void onClick(View v) {
 				DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
-				PlatformItem platform = new PlatformItem();
-				platform.name = name.getText().toString();
-				platform.overview = overview.getText().toString();
-				platform.developer = developer.getText().toString();
-				platform.rating = (double) ratingBar.getRating();
-				platform.manufacturer = manufacturer.getText().toString();
-				platform.cpu = cpu.getText().toString();
-				platform.memory = memory.getText().toString();
-				platform.graphics = graphics.getText().toString();
-				platform.sound = sound.getText().toString();
-				platform.display = display.getText().toString();
-				platform.media = media.getText().toString();
-				platform.maxControllers = maxControllers.getText().toString();
+				Platform platform = new Platform();
+				platform.setName(name.getText().toString());
+				platform.setOverview(overview.getText().toString());
+				platform.setDeveloper(developer.getText().toString());
+				platform.setRating((double) ratingBar.getRating());
+				platform.setManufacturer(manufacturer.getText().toString());
+				platform.setCpu(cpu.getText().toString());
+				platform.setMemory(memory.getText().toString());
+				platform.setGraphics(graphics.getText().toString());
+				platform.setSound(sound.getText().toString());
+				platform.setDisplay(display.getText().toString());
+				platform.setMedia(media.getText().toString());
+				platform.setMaxControllers(maxControllers.getText().toString());
 				dbHelper.addPlatform(platform);
 			}
 		});
@@ -71,29 +71,29 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 		new GetPlatform().execute(platform);
 	}
 	
-	public void setValues(Data<PlatformItem> platform) {
-		name.setText(platform.items.get(0).name);
-		overview.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).overview));
-		developer.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).developer));
-		ratingBar.setRating((float) platform.items.get(0).rating);
-		manufacturer.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).manufacturer));
-		cpu.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).cpu));
-		memory.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).memory));
-		graphics.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).graphics));
-		sound.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).sound));
-		display.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).display));
-		media.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).media));
-		maxControllers.setText(StringEscapeUtils.unescapeXml(platform.items.get(0).maxControllers));
+	public void setValues(Data<Platform> platform) {
+		name.setText(platform.getItems().get(0).getName());
+		overview.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getOverview()));
+		developer.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getDeveloper()));
+		ratingBar.setRating((float) platform.getItem(0).getRating());
+		manufacturer.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getManufacturer()));
+		cpu.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getCpu()));
+		memory.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getMemory()));
+		graphics.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getGraphics()));
+		sound.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getSound()));
+		display.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getDisplay()));
+		media.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getMedia()));
+		maxControllers.setText(StringEscapeUtils.unescapeXml(platform.getItem(0).getMaxControllers()));
 	}
 	
-	public class GetPlatform extends AsyncTask<Integer, Integer, Data<PlatformItem>> {
+	public class GetPlatform extends AsyncTask<Integer, Integer, Data<Platform>> {
 		@Override
-		protected Data<PlatformItem> doInBackground(Integer... params) {
-			return new Utilities().PlatformFromID(params[0]);
+		protected Data<Platform> doInBackground(Integer... params) {
+			return Utilities.getInstance().getPlatformFromID(params[0]);
 		}
 
 		@Override
-		protected void onPostExecute(Data<PlatformItem> result) {
+		protected void onPostExecute(Data<Platform> result) {
 			setValues(result);
 			addPlatformButton.setEnabled(true);
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);

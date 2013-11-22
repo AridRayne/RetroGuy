@@ -16,7 +16,6 @@ import com.AridRayne.thegamesdb.lib.PlatformListItems;
 import com.AridRayne.thegamesdb.lib.Utilities;
 
 public class AddPlatformListFragment extends RoboSherlockListFragment {
-	Utilities utils;
 	List<PlatformListItems> list;
 	ArrayAdapter<PlatformListItems> adapter;
 
@@ -25,7 +24,6 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		utils = new Utilities();
 		getSherlockActivity().getSupportActionBar().setSubtitle("Add Platform");
 		list = new ArrayList<PlatformListItems>();
 		adapter = new ArrayAdapter<PlatformListItems>(getActivity(), android.R.layout.simple_list_item_1, list);
@@ -49,7 +47,7 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		AddPlatformFragment addPlatformFragment = new AddPlatformFragment();
-		addPlatformFragment.platform = list.get(position).id;
+		addPlatformFragment.platform = list.get(position).getId();
 		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, addPlatformFragment).addToBackStack(null).commit();
 		super.onListItemClick(l, v, position, id);
 	}
@@ -58,15 +56,13 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 
 		@Override
 		protected PlatformList doInBackground(Object... params) {
-			return utils.getPlatformList();
+			return Utilities.getInstance().getPlatformList();
 		}
 
 		@Override
 		protected void onPostExecute(PlatformList result) {
-			list.addAll(result.items);
+			list.addAll(result.getItems());
 			adapter.notifyDataSetChanged();
-//			adapter = new ArrayAdapter<PlatformListItems>(getActivity(), android.R.layout.simple_list_item_1, list.items);
-//			setListAdapter(adapter);
 			super.onPostExecute(result);
 		}
 	}

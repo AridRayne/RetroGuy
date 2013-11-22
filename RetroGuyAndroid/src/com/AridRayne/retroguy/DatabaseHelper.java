@@ -6,14 +6,14 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.AridRayne.thegamesdb.lib.GameItem;
-import com.AridRayne.thegamesdb.lib.PlatformItem;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.AridRayne.thegamesdb.lib.Game;
+import com.AridRayne.thegamesdb.lib.Platform;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
@@ -97,28 +97,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return c.getCount();
 	}
 	
-	public long addPlatform(PlatformItem platform) {
+	public long addPlatform(Platform platform) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, platform.id);
-		values.put(KEY_OVERVIEW, platform.overview);
-		values.put(KEY_DEVELOPER, platform.developer);
-		values.put(KEY_RATING, platform.rating);
-		values.put(KEY_PLATFORMS_CONSOLE, platform.console);
-		values.put(KEY_PLATFORMS_CONTROLLER, platform.controller);
-		values.put(KEY_PLATFORMS_CPU, platform.cpu);
-		values.put(KEY_PLATFORMS_DISPLAY, platform.display);
-		values.put(KEY_PLATFORMS_GRAPHICS, platform.graphics);
-		values.put(KEY_PLATFORMS_MANUFACTURER, platform.manufacturer);
-		values.put(KEY_PLATFORMS_MAX_CONTROLLERS, platform.maxControllers);
-		values.put(KEY_PLATFORMS_MEDIA, platform.media);
-		values.put(KEY_PLATFORMS_MEMORY, platform.memory);
-		values.put(KEY_PLATFORMS_NAME, platform.name);
-		values.put(KEY_PLATFORMS_SOUND, platform.sound);
+		values.put(KEY_ID, platform.getId());
+		values.put(KEY_OVERVIEW, platform.getOverview());
+		values.put(KEY_DEVELOPER, platform.getDeveloper());
+		values.put(KEY_RATING, platform.getRating());
+		values.put(KEY_PLATFORMS_CONSOLE, platform.getConsole());
+		values.put(KEY_PLATFORMS_CONTROLLER, platform.getController());
+		values.put(KEY_PLATFORMS_CPU, platform.getCpu());
+		values.put(KEY_PLATFORMS_DISPLAY, platform.getDisplay());
+		values.put(KEY_PLATFORMS_GRAPHICS, platform.getGraphics());
+		values.put(KEY_PLATFORMS_MANUFACTURER, platform.getManufacturer());
+		values.put(KEY_PLATFORMS_MAX_CONTROLLERS, platform.getMaxControllers());
+		values.put(KEY_PLATFORMS_MEDIA, platform.getMedia());
+		values.put(KEY_PLATFORMS_MEMORY, platform.getMemory());
+		values.put(KEY_PLATFORMS_NAME, platform.getName());
+		values.put(KEY_PLATFORMS_SOUND, platform.getSound());
 		return db.insert(TABLE_PLATFORMS, null, values);
 	}
 	
-	public PlatformItem getPlatformItem(int id) {
+	public Platform getPlatformItem(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		String query = "SELECT * FROM " + TABLE_PLATFORMS + " WHERE " + KEY_ID + " = " + id;
@@ -127,43 +127,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (cursor == null || cursor.getCount() == 0)
 			return null;
 		cursor.moveToFirst();
-		PlatformItem item = new PlatformItem();
-		item.id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-		item.overview = cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW));
-		item.developer = cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER));
-		item.rating = cursor.getFloat(cursor.getColumnIndex(KEY_RATING));
-		item.console = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE));
-		item.controller = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER));
-		item.cpu = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU));
-		item.display = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY));
-		item.graphics = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS));
-		item.manufacturer = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER));
-		item.maxControllers = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MAX_CONTROLLERS));
-		item.media = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEDIA));
-		item.memory = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEMORY));
-		item.name = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_NAME));
-		item.sound = cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_SOUND));
+		Platform item = new Platform();
+		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		item.setOverview(cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW)));
+		item.setDeveloper(cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER)));
+		item.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
+		item.setConsole(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE)));
+		item.setController(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER)));
+		item.setCpu(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
+		item.setDisplay(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY)));
+		item.setGraphics(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS)));
+		item.setManufacturer(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER)));
+		item.setMaxControllers(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MAX_CONTROLLERS)));
+		item.setMedia(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEDIA)));
+		item.setMemory(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEMORY)));
+		item.setName(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_NAME)));
+		item.setSound(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_SOUND)));
 		return item;
 	}
 	
-	public long addGame(GameItem game) {
+	public long addGame(Game game) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, game.id);
-		values.put(KEY_OVERVIEW, game.overview);
-		values.put(KEY_DEVELOPER, game.developer);
-		values.put(KEY_RATING, game.rating);
-		values.put(KEY_GAMES_COOP, game.coop);
-		values.put(KEY_GAMES_ESRB, game.esrb);
-		values.put(KEY_GAMES_GENRES, StringUtils.join(game.genres, ","));
-		values.put(KEY_GAMES_PLATFORM, game.platform);
-		values.put(KEY_GAMES_PLATFORM_ID, game.platformID);
-		values.put(KEY_GAMES_PLAYERS, game.players);
-		values.put(KEY_GAMES_PUBLISHER, game.publisher);
+		values.put(KEY_ID, game.getId());
+		values.put(KEY_OVERVIEW, game.getOverview());
+		values.put(KEY_DEVELOPER, game.getDeveloper());
+		values.put(KEY_RATING, game.getRating());
+		values.put(KEY_GAMES_COOP, game.getCoop());
+		values.put(KEY_GAMES_ESRB, game.getEsrb());
+		values.put(KEY_GAMES_GENRES, StringUtils.join(game.getGenres(), ","));
+		values.put(KEY_GAMES_PLATFORM, game.getPlatform());
+		values.put(KEY_GAMES_PLATFORM_ID, game.getPlatformID());
+		values.put(KEY_GAMES_PLAYERS, game.getPlayers());
+		values.put(KEY_GAMES_PUBLISHER, game.getPublisher());
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-		values.put(KEY_GAMES_RELEASE_DATE, df.format(game.releaseDate));
-		values.put(KEY_GAMES_TITLE, game.title);
-		values.put(KEY_GAMES_YOUTUBE, game.youtube);
+		values.put(KEY_GAMES_RELEASE_DATE, df.format(game.getReleaseDate()));
+		values.put(KEY_GAMES_TITLE, game.getTitle());
+		values.put(KEY_GAMES_YOUTUBE, game.getYoutube());
 		return db.insert(TABLE_GAMES, null, values);
 	}
 }
