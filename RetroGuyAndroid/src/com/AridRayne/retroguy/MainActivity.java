@@ -45,22 +45,4 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		}
 		return false;
 	}
-	
-	public class Task extends AsyncTask<Object, Integer, GameItem> {
-
-		@Override
-		protected GameItem doInBackground(Object... params) {
-			Utilities utils = new Utilities();
-			return utils.GameFromID(1).items.get(0);
-			//return utils.PlatformFromID(2).items.get(0);
-		}
-
-		@Override
-		protected void onPostExecute(GameItem result) {
-			DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
-			dbHelper.addGame(result);
-			super.onPostExecute(result);
-		}
-		
-	}
 }
