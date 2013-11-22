@@ -1,6 +1,5 @@
 package com.AridRayne.retroguy;
 
-import roboguice.activity.RoboSherlockFragmentActivity;
 import roboguice.fragment.RoboSherlockListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,8 +24,9 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 		utils = new Utilities();
 		list = new PlatformList();
 		dbHelper = new DatabaseHelper(getActivity());
-		RoboSherlockFragmentActivity activity = (RoboSherlockFragmentActivity) getActivity();
-		activity.getSupportActionBar().setSubtitle("Add Platform");
+		getSherlockActivity().getSupportActionBar().setSubtitle("Add Platform");
+//		RoboSherlockFragmentActivity activity = (RoboSherlockFragmentActivity) getActivity();
+//		activity.getSupportActionBar().setSubtitle("Add Platform");
 		new FillPlatformList().execute();
 	}
 	

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_platform_name_hint">Name</string>
+    <string name="add_platform_overview_hint">Overview</string>
+    <string name="add_platform_developer_hint">Developer</string>
+    <string name="add_platform_manufacturer_hint">Manufacturer</string>
+    <string name="add_platform_cpu_hint">CPU</string>
+    <string name="add_platform_memory_hint">Memory</string>
+    <string name="add_platform_graphics_hint">Graphics</string>
+    <string name="add_platform_sound_hint">Sound</string>
+    <string name="add_platform_display_hint">Display</string>
+    <string name="add_platform_media_hint">Media</string>
+    <string name="add_platform_max_controllers_hint">Max Controllers</string>
+    <string name="add_platform_button_text">Add Platform</string>
+    
+</resources>

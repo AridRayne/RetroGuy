@@ -2,11 +2,8 @@ package com.AridRayne.retroguy;
 
 import roboguice.activity.RoboSherlockFragmentActivity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.AridRayne.thegamesdb.lib.GameItem;
-import com.AridRayne.thegamesdb.lib.Utilities;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
@@ -24,8 +21,7 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
-		//TODO: Debugging code.
-//		if (dbHelper.numPlatforms() == 0)
+		if (dbHelper.numPlatforms() == 0)
 			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).addToBackStack(null).commit();
 	}
 
@@ -42,6 +38,9 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		case R.id.action_settings:
 			startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 			return true;
+		case android.R.id.home:
+			getSupportFragmentManager().popBackStack();
+			break;
 		}
 		return false;
 	}

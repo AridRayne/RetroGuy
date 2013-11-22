@@ -6,30 +6,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
+            android:ems="10"
+            android:hint="@string/add_platform_name_hint" />
 
         <EditText
             android:id="@+id/editTextOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/add_platform_overview_hint"
             android:inputType="textMultiLine" />
 
         <EditText
             android:id="@+id/editTextDeveloper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_developer_hint" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -43,55 +43,63 @@
             android:id="@+id/editTextManufacturer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_manufacturer_hint" />
 
         <EditText
             android:id="@+id/editTextCPU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_cpu_hint" />
 
         <EditText
             android:id="@+id/editTextMemory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_memory_hint" />
 
         <EditText
             android:id="@+id/editTextGraphics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_graphics_hint" />
 
         <EditText
             android:id="@+id/editTextSound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_sound_hint" />
 
         <EditText
             android:id="@+id/editTextDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_display_hint" />
 
         <EditText
             android:id="@+id/editTextMedia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_media_hint" />
 
         <EditText
             android:id="@+id/editTextMaxControllers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="@string/add_platform_max_controllers_hint" />
 
         <Button
             android:id="@+id/buttonAddPlatform"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Platform" />
+            android:text="@string/add_platform_button_text" />
 
     </LinearLayout>
 
