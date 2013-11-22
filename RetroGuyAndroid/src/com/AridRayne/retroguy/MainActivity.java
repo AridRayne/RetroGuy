@@ -9,8 +9,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
 public class MainActivity extends RoboSherlockFragmentActivity {
-
-	//@InjectView (R.id.textView1) TextView tv1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +16,13 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setSubtitle("");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
-		if (dbHelper.numPlatforms() == 0)
-			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).addToBackStack(null).commit();
+		if (savedInstanceState == null)
+			if (dbHelper.numPlatforms() == 0)
+				getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, new AddPlatformListFragment()).addToBackStack(null).commit();
 	}
 
 	@Override
