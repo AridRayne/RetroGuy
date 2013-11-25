@@ -1,9 +1,5 @@
 package com.AridRayne.retroguy;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.ContentValues;
@@ -72,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ KEY_GAMES_ESRB + " TEXT," + KEY_GAMES_GENRES + " TEXT,"
 			+ KEY_GAMES_PLAYERS + " TEXT," + KEY_GAMES_COOP + " TEXT,"
 			+ KEY_GAMES_YOUTUBE + " TEXT," + KEY_GAMES_PUBLISHER + " TEXT,"
-			+ KEY_GAMES_RELEASE_DATE + " DATETIME)";
+			+ KEY_GAMES_RELEASE_DATE + " TEXT)";
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -106,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_RATING, platform.getRating());
 		values.put(KEY_PLATFORMS_CONSOLE, platform.getConsole());
 		values.put(KEY_PLATFORMS_CONTROLLER, platform.getController());
-		values.put(KEY_PLATFORMS_CPU, platform.getCpu());
+		values.put(KEY_PLATFORMS_CPU, platform.getCPU());
 		values.put(KEY_PLATFORMS_DISPLAY, platform.getDisplay());
 		values.put(KEY_PLATFORMS_GRAPHICS, platform.getGraphics());
 		values.put(KEY_PLATFORMS_MANUFACTURER, platform.getManufacturer());
@@ -134,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		item.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
 		item.setConsole(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE)));
 		item.setController(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER)));
-		item.setCpu(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
+		item.setCPU(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
 		item.setDisplay(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY)));
 		item.setGraphics(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS)));
 		item.setManufacturer(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER)));
@@ -160,8 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_GAMES_PLATFORM_ID, game.getPlatformID());
 		values.put(KEY_GAMES_PLAYERS, game.getPlayers());
 		values.put(KEY_GAMES_PUBLISHER, game.getPublisher());
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-		values.put(KEY_GAMES_RELEASE_DATE, df.format(game.getReleaseDate()));
+		values.put(KEY_GAMES_RELEASE_DATE, game.getReleaseDate());
 		values.put(KEY_GAMES_TITLE, game.getTitle());
 		values.put(KEY_GAMES_YOUTUBE, game.getYoutube());
 		return db.insert(TABLE_GAMES, null, values);

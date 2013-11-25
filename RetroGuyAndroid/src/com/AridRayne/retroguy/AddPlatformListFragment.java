@@ -5,19 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.fragment.RoboSherlockListFragment;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.AridRayne.thegamesdb.lib.PlatformList;
-import com.AridRayne.thegamesdb.lib.PlatformListItems;
+import com.AridRayne.thegamesdb.lib.PlatformListItem;
 import com.AridRayne.thegamesdb.lib.Utilities;
+import com.squareup.picasso.Picasso;
 
 public class AddPlatformListFragment extends RoboSherlockListFragment {
-	List<PlatformListItems> list;
-	ArrayAdapter<PlatformListItems> adapter;
+	List<PlatformListItem> list;
+	PlatformAdapter adapter;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -25,11 +31,12 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		getSherlockActivity().getSupportActionBar().setSubtitle("Add Platform");
-		list = new ArrayList<PlatformListItems>();
-		adapter = new ArrayAdapter<PlatformListItems>(getActivity(), android.R.layout.simple_list_item_1, list);
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		list = new ArrayList<PlatformListItem>();
+		adapter = new PlatformAdapter(getActivity());
 		setListAdapter(adapter);
 		if (savedInstanceState != null) {
-			list.addAll((List<PlatformListItems>) savedInstanceState.getSerializable("list"));
+			list.addAll((List<PlatformListItem>) savedInstanceState.getSerializable("list"));
 			adapter.notifyDataSetChanged();
 		}
 		else {
@@ -47,7 +54,7 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		AddPlatformFragment addPlatformFragment = new AddPlatformFragment();
-		addPlatformFragment.platform = list.get(position).getId();
+		addPlatformFragment.platformID = list.get(position).getId();
 		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, addPlatformFragment).addToBackStack(null).commit();
 		super.onListItemClick(l, v, position, id);
 	}
@@ -63,7 +70,32 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 		protected void onPostExecute(PlatformList result) {
 			list.addAll(result.getItems());
 			adapter.notifyDataSetChanged();
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 			super.onPostExecute(result);
+		}
+	}
+	
+	public class PlatformAdapter extends ArrayAdapter<PlatformListItem> {
+		private Context context;
+		
+		public PlatformAdapter(Context context) {
+			super(context, R.layout.add_platform_row, list);
+			this.context = context;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View rowView = inflater.inflate(R.layout.add_platform_row, parent, false);
+			TextView name = (TextView) rowView.findViewById(R.id.addPlatformTextViewName);
+			ImageView icon = (ImageView) rowView.findViewById(R.id.addPlatformIcon);
+			name.setText(list.get(position).getName());
+			Picasso.with(context).load("http://thegamesdb.net/banners/platform/fanart/thumb/" + list.get(position).getId() + "-1.jpg")
+				.placeholder(R.drawable.ic_placeholder)
+				.centerInside()
+				.fit()
+				.into(icon);
+			return rowView;
 		}
 	}
 }
