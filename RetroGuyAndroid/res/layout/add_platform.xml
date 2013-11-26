@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:fcf="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -15,6 +16,11 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/add_platform_name_hint" />
+
+        <Gallery
+            android:id="@+id/imagesGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/editTextOverview"

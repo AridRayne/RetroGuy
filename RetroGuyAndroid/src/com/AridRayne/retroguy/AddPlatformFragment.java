@@ -4,18 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.Header;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -26,6 +32,7 @@ import com.AridRayne.thegamesdb.lib.image.FanArt;
 import com.AridRayne.thegamesdb.lib.image.Image;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 public class AddPlatformFragment extends RoboSherlockFragment {
 	int platformID;
@@ -45,6 +52,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 	@InjectView (R.id.editTextMedia) TextView media;
 	@InjectView (R.id.editTextMaxControllers) TextView maxControllers;
 	@InjectView (R.id.buttonAddPlatform) Button addPlatformButton;
+	@InjectView (R.id.imagesGallery) Gallery imagesGallery;
 
 	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,12 +182,56 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 		media.setText(platform.getItem(0).getMedia());
 		maxControllers.setText(platform.getItem(0).getMaxControllers());
 		baseUrl = platform.getBaseUrl();
+
+		List<String> imageURLs = new ArrayList<String>();
+		if (this.platform.getImages().getBanner() != null) {
+			for (Image image : this.platform.getImages().getBanner()) {
+				imageURLs.add(image.getUrl());
+			}
+		}
+		
+		if (this.platform.getImages().getBoxart() != null) {
+			for (Image image : this.platform.getImages().getBoxart()) {
+				imageURLs.add(image.getUrl());
+			}
+		}
+		
+		if (this.platform.getImages().getClearlogo() != null) {
+			for (Image image : this.platform.getImages().getClearlogo()) {
+				imageURLs.add(image.getUrl());
+			}
+		}
+		
+		if (this.platform.getImages().getConsoleart() != null) {
+			for (String url : this.platform.getImages().getConsoleart()) {
+				imageURLs.add(url);
+			}
+		}
+		
+		if (this.platform.getImages().getControllerart() != null) {
+			for (String url : this.platform.getImages().getControllerart()) {
+				imageURLs.add(url);
+			}
+		}
+		
+		if (this.platform.getImages().getFanart() != null) {
+			for (FanArt image : this.platform.getImages().getFanart()) {
+				imageURLs.add(image.getThumb());
+			}
+		}
+		
+		if (this.platform.getImages().getScreenshot() != null) {
+			for (FanArt image : this.platform.getImages().getScreenshot()) {
+				imageURLs.add(image.getThumb());
+			}
+		}
+		imagesGallery.setAdapter(new ImageAdapter(getSherlockActivity().getApplicationContext(), imageURLs));
 	}
 	
 	public class GetPlatform extends AsyncTask<Integer, Integer, Data<Platform>> {
 		@Override
 		protected Data<Platform> doInBackground(Integer... params) {
-			return Utilities.getInstance().getPlatformFromID(params[0]);
+			return Utilities.getInstance().getPlatform(params[0]);
 		}
 
 		@Override
@@ -187,6 +239,30 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 			setValues(result);
 			addPlatformButton.setEnabled(true);
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+		}
+	}
+	
+	public class ImageAdapter extends ArrayAdapter<String> {
+		List<String> imageURLs;
+		Context context;
+		
+		public ImageAdapter(Context context, List<String> objects) {
+			super(context, 0, objects);
+			imageURLs = objects;
+			this.context = context;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ImageView image = new ImageView(context);
+			image.setLayoutParams(new Gallery.LayoutParams(200, 200));
+			Picasso.with(context)
+				.load(baseUrl + imageURLs.get(position))
+				.placeholder(R.drawable.ic_placeholder)
+				.centerInside()
+				.fit()
+				.into(image);
+			return image;
 		}
 	}
 }
