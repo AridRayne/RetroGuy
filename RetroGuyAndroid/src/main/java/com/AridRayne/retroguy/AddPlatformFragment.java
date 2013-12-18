@@ -11,6 +11,7 @@ import org.apache.http.Header;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
+import AridRayne.retroguy.R;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -97,23 +98,23 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 					}
 				}
 				
-				if (platform.getImages().getClearlogo() != null) {
+				if (platform.getImages().getClearLogo() != null) {
 					iDirectory = getSherlockActivity().getDir("platform_clearlogo", 0);
-					for (Image image : platform.getImages().getClearlogo()) {
+					for (Image image : platform.getImages().getClearLogo()) {
 						downloadImage(iDirectory, baseUrl + image.getUrl());
 					}
 				}
 				
-				if (platform.getImages().getConsoleart() != null) {
+				if (platform.getImages().getConsoleArt() != null) {
 					iDirectory = getSherlockActivity().getDir("platform_consoleart", 0);
-					for (String url : platform.getImages().getConsoleart()) {
+					for (String url : platform.getImages().getConsoleArt()) {
 						downloadImage(iDirectory, baseUrl + url);
 					}
 				}
 				
-				if (platform.getImages().getControllerart() != null) {
+				if (platform.getImages().getControllerArt() != null) {
 					iDirectory = getSherlockActivity().getDir("platform_controllerart", 0);
-					for (String url : platform.getImages().getControllerart()) {
+					for (String url : platform.getImages().getControllerArt()) {
 						downloadImage(iDirectory, baseUrl + url);
 					}
 				}
@@ -196,20 +197,20 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 			}
 		}
 		
-		if (this.platform.getImages().getClearlogo() != null) {
-			for (Image image : this.platform.getImages().getClearlogo()) {
+		if (this.platform.getImages().getClearLogo() != null) {
+			for (Image image : this.platform.getImages().getClearLogo()) {
 				imageURLs.add(image.getUrl());
 			}
 		}
 		
-		if (this.platform.getImages().getConsoleart() != null) {
-			for (String url : this.platform.getImages().getConsoleart()) {
+		if (this.platform.getImages().getConsoleArt() != null) {
+			for (String url : this.platform.getImages().getConsoleArt()) {
 				imageURLs.add(url);
 			}
 		}
 		
-		if (this.platform.getImages().getControllerart() != null) {
-			for (String url : this.platform.getImages().getControllerart()) {
+		if (this.platform.getImages().getControllerArt() != null) {
+			for (String url : this.platform.getImages().getControllerArt()) {
 				imageURLs.add(url);
 			}
 		}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.fragment.RoboSherlockListFragment;
+import AridRayne.retroguy.R;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;

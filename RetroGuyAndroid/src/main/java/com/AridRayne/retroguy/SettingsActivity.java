@@ -2,6 +2,7 @@ package com.AridRayne.retroguy;
 
 import java.util.List;
 
+import AridRayne.retroguy.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;

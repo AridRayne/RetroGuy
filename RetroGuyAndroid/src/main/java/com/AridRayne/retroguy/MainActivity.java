@@ -1,6 +1,7 @@
 package com.AridRayne.retroguy;
 
 import roboguice.activity.RoboSherlockFragmentActivity;
+import AridRayne.retroguy.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		Utilities.getInstance().setUserId(sharedPrefs.getString("gamesDBAccountID", ""));
+		Utilities.getInstance().setUserAccountID(sharedPrefs.getString("gamesDBAccountID", ""));
 		DatabaseHelper dbHelper = new DatabaseHelper(this);
 		if (savedInstanceState == null)
 			if (dbHelper.numPlatforms() == 0)
