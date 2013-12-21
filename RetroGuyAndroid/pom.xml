@@ -62,6 +62,12 @@
   		<artifactId>actionbarsherlock</artifactId>
   		<version>4.4.0</version>
   		<type>apklib</type>
+  		<exclusions>
+  			<exclusion>
+  				<artifactId>support-v4</artifactId>
+  				<groupId>com.google.android</groupId>
+  			</exclusion>
+  		</exclusions>
   	</dependency>
     <dependency>
         <groupId>AridRayne</groupId>

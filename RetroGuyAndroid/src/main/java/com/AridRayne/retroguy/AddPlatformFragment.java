@@ -36,6 +36,7 @@ import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 public class AddPlatformFragment extends RoboSherlockFragment {
+
 	int platformID;
 	Platform platform;
 	String baseUrl;

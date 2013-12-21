@@ -29,10 +29,6 @@
             android:name="com.AridRayne.retroguy.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
-        <activity
-            android:name="com.AridRayne.retroguy.AddPlatformActivity"
-            android:label="@string/title_activity_add_platform" >
-        </activity>
     </application>
 
 </manifest>
