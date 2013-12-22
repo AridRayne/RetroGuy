@@ -1,4 +1,4 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +11,6 @@ import org.apache.http.Header;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
-import AridRayne.retroguy.R;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
 import com.AridRayne.thegamesdb.lib.Data;
 import com.AridRayne.thegamesdb.lib.Platform;
 import com.AridRayne.thegamesdb.lib.Utilities;
@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 public class AddPlatformFragment extends RoboSherlockFragment {
 
 	int platformID;
-	Platform platform;
+	RetroGuyPlatform platform;
 	String baseUrl;
 	
 	@InjectView (R.id.editTextName) TextView name;
@@ -69,6 +69,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 		addPlatformButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//TODO: Add some way to let the user know that we're downloading the images. Maybe a progress dialog?
 				DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
 				platform.setName(name.getText().toString());
 				platform.setOverview(overview.getText().toString());
@@ -83,58 +84,52 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 				platform.setMedia(media.getText().toString());
 				platform.setMaxControllers(maxControllers.getText().toString());
 
-				File iDirectory;
+				List<String> urls = new ArrayList<String>();
 				
 				if (platform.getImages().getBanner() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_banner", 0);
 					for (Image image : platform.getImages().getBanner()) {
-						downloadImage(iDirectory, baseUrl + image.getUrl());
+						urls.add(image.getUrl());
 					}
 				}
 				
 				if (platform.getImages().getBoxart() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_boxart", 0);
 					for (Image image : platform.getImages().getBoxart()) {
-						downloadImage(iDirectory, baseUrl + image.getUrl());
+						urls.add(image.getUrl());
 					}
 				}
 				
 				if (platform.getImages().getClearLogo() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_clearlogo", 0);
 					for (Image image : platform.getImages().getClearLogo()) {
-						downloadImage(iDirectory, baseUrl + image.getUrl());
+						urls.add(image.getUrl());
 					}
 				}
 				
 				if (platform.getImages().getConsoleArt() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_consoleart", 0);
 					for (String url : platform.getImages().getConsoleArt()) {
-						downloadImage(iDirectory, baseUrl + url);
+						urls.add(url);
 					}
 				}
 				
 				if (platform.getImages().getControllerArt() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_controllerart", 0);
 					for (String url : platform.getImages().getControllerArt()) {
-						downloadImage(iDirectory, baseUrl + url);
+						urls.add(url);
 					}
 				}
 				
 				if (platform.getImages().getFanart() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_fanart", 0);
 					for (FanArt image : platform.getImages().getFanart()) {
-						downloadImage(iDirectory, baseUrl + image.getOriginal().getUrl());
+						urls.add(image.getOriginal().getUrl());
 					}
 				}
 				
 				if (platform.getImages().getScreenshot() != null) {
-					iDirectory = getSherlockActivity().getDir("platform_screenshot", 0);
 					for (FanArt image : platform.getImages().getScreenshot()) {
-						downloadImage(iDirectory, baseUrl + image.getOriginal().getUrl());
+						urls.add(image.getOriginal().getUrl());
 					}
 				}
-				//TODO: Commented out for debugging.
-//				dbHelper.addPlatform(platform);
+				platform.setImageFileName(ImageDownloader.downloadImages(baseUrl, urls, (String)imagesGallery.getSelectedItem(), getSherlockActivity()));
+				dbHelper.addPlatform(platform);
+
 			}
 		});
 		addPlatformButton.setEnabled(false);
@@ -142,7 +137,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 		new GetPlatform().execute(platformID);
 	}
 	
-	public void downloadImage(File directory, String imageURL) {
+	public String downloadImage(File directory, String imageURL) {
 		AsyncHttpClient client = new AsyncHttpClient();
 		String[] content = new String[] { "image/png", "image/jpeg" };
 		final File i = new File(directory, imageURL.substring(imageURL.lastIndexOf("/")));
@@ -166,11 +161,11 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 					byte[] binaryData, Throwable error) {
 			}
 		});
-		
+		return i.getPath();
 	}
 	
 	public void setValues(Data<Platform> platform) {
-		this.platform = platform.getItem(0);
+		this.platform = new RetroGuyPlatform(platform.getItem(0));
 		name.setText(platform.getItems().get(0).getName());
 		overview.setText(platform.getItem(0).getOverview());
 		developer.setText(platform.getItem(0).getDeveloper());

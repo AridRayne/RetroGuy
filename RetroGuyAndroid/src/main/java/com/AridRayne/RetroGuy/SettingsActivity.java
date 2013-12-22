@@ -1,8 +1,7 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
 import java.util.List;
 
-import AridRayne.retroguy.R;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;

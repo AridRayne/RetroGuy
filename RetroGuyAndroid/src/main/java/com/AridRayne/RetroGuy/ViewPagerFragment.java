@@ -1,8 +1,7 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
-import AridRayne.retroguy.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -21,27 +20,32 @@ public class ViewPagerFragment extends RoboSherlockFragment implements TabListen
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		final ActionBar ab = getSherlockActivity().getSupportActionBar();
-		ActionBar.Tab favoritesTab = ab.newTab().setText("Favorites").setTabListener(this);
-		ab.addTab(favoritesTab);
-		ActionBar.Tab recentlyAddedTab = ab.newTab().setText("Recently Added").setTabListener(this);
-		ab.addTab(recentlyAddedTab);
-		ActionBar.Tab recentlyPlayedTab = ab.newTab().setText("Recently Played").setTabListener(this);
-		ab.addTab(recentlyPlayedTab);
-		ActionBar.Tab platformsTab = ab.newTab().setText("Platforms").setTabListener(this);
-		ab.addTab(platformsTab);
-		ActionBar.Tab gamesTab = ab.newTab().setText("Games").setTabListener(this);
-		ab.addTab(gamesTab);
+		if (savedInstanceState != null) {
+			int a = 10;
+		}
+		else {
+			ActionBar.Tab favoritesTab = ab.newTab().setText("Favorites").setTabListener(this);
+			ab.addTab(favoritesTab);
+			ActionBar.Tab recentlyAddedTab = ab.newTab().setText("Recently Added").setTabListener(this);
+			ab.addTab(recentlyAddedTab);
+			ActionBar.Tab recentlyPlayedTab = ab.newTab().setText("Recently Played").setTabListener(this);
+			ab.addTab(recentlyPlayedTab);
+			ActionBar.Tab platformsTab = ab.newTab().setText("Platforms").setTabListener(this);
+			ab.addTab(platformsTab);
+			ActionBar.Tab gamesTab = ab.newTab().setText("Games").setTabListener(this);
+			ab.addTab(gamesTab);
+			TabsAdapter adapter = new TabsAdapter(getSherlockActivity().getSupportFragmentManager());
+			viewPager.setAdapter(adapter);
+			
+			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+			{
+				@Override
+				public void onPageSelected(int position) {
+					ab.setSelectedNavigationItem(position);
+				}
+			});
+		}
 		
-		TabsAdapter adapter = new TabsAdapter(getSherlockActivity().getSupportFragmentManager());
-		viewPager.setAdapter(adapter);
-		
-		viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-		{
-			@Override
-			public void onPageSelected(int position) {
-				ab.setSelectedNavigationItem(position);
-			}
-		});
 	}
 
 	@Override

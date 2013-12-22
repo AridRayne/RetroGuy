@@ -1,6 +1,5 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
-import AridRayne.retroguy.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

@@ -1,32 +1,32 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
-import AridRayne.retroguy.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
+
 public class PlatformsFragment extends RoboSherlockFragment {
-	List<GridViewItem> items;
+	List<RetroGuyPlatform> items;
 	GridViewAdapter adapter;
+	DatabaseHelper dbHelper;
 
 	@InjectView (R.id.gridView1) GridView gridView;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		
-		items = new ArrayList<GridViewItem>();
-		//TODO: DEBUG CODE
-		items.add(new GridViewItem("http://thegamesdb.net/banners/platform/consoleart/15.png", "Microsoft Xbox 360"));
+		dbHelper = new DatabaseHelper(getSherlockActivity());
+		items = new ArrayList<RetroGuyPlatform>();
+		items.addAll(dbHelper.getAllPlatforms());
 		
 		adapter = new GridViewAdapter(getSherlockActivity(), items);
 		gridView.setAdapter(adapter);
@@ -36,6 +36,12 @@ public class PlatformsFragment extends RoboSherlockFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override

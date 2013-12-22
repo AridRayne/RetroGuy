@@ -1,7 +1,6 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
 import roboguice.activity.RoboSherlockFragmentActivity;
-import AridRayne.retroguy.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,13 +30,8 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		Utilities.getInstance().setUserAccountID(sharedPrefs.getString("gamesDBAccountID", ""));
 	
 		vpf = new ViewPagerFragment();
-		getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, vpf).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, vpf).commit();
 
-		// TODO: Implement an add platform button "+" that appears on the actionbar when on the platforms page.
-//		DatabaseHelper dbHelper = new DatabaseHelper(this);
-//		if (savedInstanceState == null)
-//			if (dbHelper.numPlatforms() == 0)
-//				getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, new AddPlatformListFragment()).addToBackStack(null).commit();
 	}
 
 	@Override

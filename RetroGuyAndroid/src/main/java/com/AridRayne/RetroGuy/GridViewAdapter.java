@@ -1,8 +1,8 @@
-package com.AridRayne.retroguy;
+package com.AridRayne.RetroGuy;
 
+import java.io.File;
 import java.util.List;
 
-import AridRayne.retroguy.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
 import com.squareup.picasso.Picasso;
 
-public class GridViewAdapter extends ArrayAdapter<GridViewItem> {
+public class GridViewAdapter extends ArrayAdapter<RetroGuyPlatform> {
 	Context context;
-	List<GridViewItem> items;
+	List<RetroGuyPlatform> items;
 	
-	public GridViewAdapter(Context context, List<GridViewItem> data) {
+	public GridViewAdapter(Context context, List<RetroGuyPlatform> data) {
 		super(context, R.layout.grid_view_row, data);
 		this.context = context;
 		this.items = data;
@@ -29,8 +30,8 @@ public class GridViewAdapter extends ArrayAdapter<GridViewItem> {
 		View rowView = inflater.inflate(R.layout.grid_view_row, parent, false);
 		TextView title = (TextView) rowView.findViewById(R.id.gridViewRowText);
 		ImageView image = (ImageView) rowView.findViewById(R.id.gridViewRowImage);
-		title.setText(items.get(position).getTitle());
-		Picasso.with(context).load(items.get(position).getFileName())
+		title.setText(items.get(position).getName());
+		Picasso.with(context).load(new File(items.get(position).getImageFileName()))
 			.placeholder(R.drawable.ic_placeholder)
 			.centerInside()
 			.fit()
