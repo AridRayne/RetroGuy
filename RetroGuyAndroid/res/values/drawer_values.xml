@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="child_titles">
+        <item >Name</item>
+        <item >Genre</item>
+        <item >Platform</item>
+        <item >Year</item>
+        <item >Number of Players</item>
+    </string-array>
+    <string name="filter_title">Filter</string>
+    <string name="sort_title">Sort</string>
+    
+</resources>

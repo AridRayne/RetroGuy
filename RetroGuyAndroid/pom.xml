@@ -57,18 +57,6 @@
   		<artifactId>android-async-http</artifactId>
   		<version>1.4.4</version>
   	</dependency>
-  	<dependency>
-  		<groupId>com.actionbarsherlock</groupId>
-  		<artifactId>actionbarsherlock</artifactId>
-  		<version>4.4.0</version>
-  		<type>apklib</type>
-  		<exclusions>
-  			<exclusion>
-  				<artifactId>support-v4</artifactId>
-  				<groupId>com.google.android</groupId>
-  			</exclusion>
-  		</exclusions>
-  	</dependency>
     <dependency>
         <groupId>AridRayne</groupId>
         <artifactId>TheGamesDBNetLib</artifactId>
@@ -97,6 +85,18 @@
     	<groupId>javax.inject</groupId>
     	<artifactId>javax.inject</artifactId>
     	<version>1</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.actionbarsherlock</groupId>
+    	<artifactId>actionbarsherlock</artifactId>
+    	<version>4.4.0</version>
+    	<type>apklib</type>
+    	<exclusions>
+    		<exclusion>
+    			<artifactId>support-v4</artifactId>
+    			<groupId>com.google.android</groupId>
+    		</exclusion>
+    	</exclusions>
     </dependency>
   </dependencies>
   <packaging>apk</packaging>

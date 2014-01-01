@@ -36,7 +36,6 @@ public class TabsAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return 5;
 	}
 

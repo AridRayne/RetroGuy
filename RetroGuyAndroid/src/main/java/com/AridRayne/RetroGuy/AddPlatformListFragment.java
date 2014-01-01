@@ -30,7 +30,6 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		getSherlockActivity().getSupportActionBar().setSubtitle("Add Platform");
 		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 		list = new ArrayList<PlatformListItem>();
 		adapter = new PlatformAdapter(getActivity());
@@ -46,7 +45,6 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		outState.putSerializable("list", (Serializable) list);
 		super.onSaveInstanceState(outState);
 	}
@@ -55,7 +53,7 @@ public class AddPlatformListFragment extends RoboSherlockListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		AddPlatformFragment addPlatformFragment = new AddPlatformFragment();
 		addPlatformFragment.platformID = list.get(position).getId();
-		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, addPlatformFragment).addToBackStack(null).commit();
+		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.add_platform_frame_layout, addPlatformFragment).addToBackStack(null).commit();
 		super.onListItemClick(l, v, position, id);
 	}
 	

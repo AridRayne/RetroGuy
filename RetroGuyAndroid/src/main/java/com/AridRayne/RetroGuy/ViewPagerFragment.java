@@ -20,10 +20,7 @@ public class ViewPagerFragment extends RoboSherlockFragment implements TabListen
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		final ActionBar ab = getSherlockActivity().getSupportActionBar();
-		if (savedInstanceState != null) {
-			int a = 10;
-		}
-		else {
+		if (savedInstanceState == null) {
 			ActionBar.Tab favoritesTab = ab.newTab().setText("Favorites").setTabListener(this);
 			ab.addTab(favoritesTab);
 			ActionBar.Tab recentlyAddedTab = ab.newTab().setText("Recently Added").setTabListener(this);

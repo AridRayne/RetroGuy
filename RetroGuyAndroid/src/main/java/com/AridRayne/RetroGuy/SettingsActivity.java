@@ -35,7 +35,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeUtils.ApplyTheme(this);
+		ThemeUtils.applyTheme(this);
 		super.onCreate(savedInstanceState);
 	}
 

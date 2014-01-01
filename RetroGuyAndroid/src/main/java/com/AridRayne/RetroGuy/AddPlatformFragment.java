@@ -41,20 +41,34 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 	RetroGuyPlatform platform;
 	String baseUrl;
 	
-	@InjectView (R.id.editTextName) TextView name;
-	@InjectView (R.id.editTextOverview) TextView overview;
-	@InjectView (R.id.editTextDeveloper) TextView developer;
-	@InjectView (R.id.ratingBar) RatingBar ratingBar;
-	@InjectView (R.id.editTextManufacturer) TextView manufacturer;
-	@InjectView (R.id.editTextCPU) TextView cpu;
-	@InjectView (R.id.editTextMemory) TextView memory;
-	@InjectView (R.id.editTextGraphics) TextView graphics;
-	@InjectView (R.id.editTextSound) TextView sound;
-	@InjectView (R.id.editTextDisplay) TextView display;
-	@InjectView (R.id.editTextMedia) TextView media;
-	@InjectView (R.id.editTextMaxControllers) TextView maxControllers;
-	@InjectView (R.id.buttonAddPlatform) Button addPlatformButton;
-	@InjectView (R.id.imagesGallery) Gallery imagesGallery;
+	@InjectView
+	(R.id.editTextName) TextView name;
+	@InjectView
+	(R.id.editTextOverview) TextView overview;
+	@InjectView
+	(R.id.editTextDeveloper) TextView developer;
+	@InjectView
+	(R.id.ratingBar) RatingBar ratingBar;
+	@InjectView
+	(R.id.editTextManufacturer) TextView manufacturer;
+	@InjectView
+	(R.id.editTextCPU) TextView cpu;
+	@InjectView
+	(R.id.editTextMemory) TextView memory;
+	@InjectView
+	(R.id.editTextGraphics) TextView graphics;
+	@InjectView
+	(R.id.editTextSound) TextView sound;
+	@InjectView
+	(R.id.editTextDisplay) TextView display;
+	@InjectView
+	(R.id.editTextMedia) TextView media;
+	@InjectView
+	(R.id.editTextMaxControllers) TextView maxControllers;
+	@InjectView
+	(R.id.buttonAddPlatform) Button addPlatformButton;
+	@InjectView
+	(R.id.imagesGallery) Gallery imagesGallery;
 
 	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,9 +141,8 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 						urls.add(image.getOriginal().getUrl());
 					}
 				}
-				platform.setImageFileName(ImageDownloader.downloadImages(baseUrl, urls, (String)imagesGallery.getSelectedItem(), getSherlockActivity()));
+				platform.setImageFileName(ImageDownloader.downloadImages(baseUrl, urls, (String)imagesGallery.getSelectedItem(), getSherlockActivity(), true));
 				dbHelper.addPlatform(platform);
-
 			}
 		});
 		addPlatformButton.setEnabled(false);

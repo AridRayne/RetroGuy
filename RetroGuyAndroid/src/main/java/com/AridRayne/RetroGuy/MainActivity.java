@@ -11,27 +11,32 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class MainActivity extends RoboSherlockFragmentActivity {
-	ViewPagerFragment vpf;
+	SlidingMenu menu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeUtils.ApplyTheme(this);
+		super.onCreate(savedInstanceState);
+		ThemeUtils.applyTheme(this);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		final ActionBar ab = getSupportActionBar();
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setSubtitle("");
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		Utilities.getInstance().setUserAccountID(sharedPrefs.getString("gamesDBAccountID", ""));
 	
-		vpf = new ViewPagerFragment();
-		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout1, vpf).commit();
-
+		getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameLayout, new ViewPagerFragment()).commit();
+		menu = new SlidingMenu(this);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
+		menu.setShadowDrawable(R.drawable.shadow);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setMenu(R.layout.sliding_menu_layout);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 	}
 
 	@Override
@@ -48,18 +53,27 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 			startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 			return true;
 		case R.id.action_add:
-			getSupportFragmentManager()
-			.beginTransaction()
-			.add(R.id.FrameLayout1, new AddPlatformListFragment())
-			.hide(vpf)
-			.addToBackStack(null)
-			.commit();
+			startActivity(new Intent(getApplicationContext(), AddPlatformActivity.class));
+//			getSupportFragmentManager()
+//			.beginTransaction()
+//			.add(R.id.mainFrameLayout, new AddPlatformListFragment())
+//			.hide(vpf)
+//			.addToBackStack(null)
+//			.commit();
 			return true;
 		case android.R.id.home:
 			getSupportFragmentManager().popBackStack();
 			break;
 		}
 		return false;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (menu.isMenuShowing())
+			menu.showContent();
+		else
+			super.onBackPressed();
 	}
 
 }

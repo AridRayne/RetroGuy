@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class ThemeUtils {
-	public static void ApplyTheme(Context context) {
+	public static void applyTheme(Context context) {
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		String theme = sharedPrefs.getString("appTheme", "default");
 		if (theme.equals("light")) {

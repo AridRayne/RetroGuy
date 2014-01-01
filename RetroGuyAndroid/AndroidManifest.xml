@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -28,6 +28,14 @@
         <activity
             android:name="com.AridRayne.RetroGuy.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.AridRayne.RetroGuy.AddPlatformActivity"
+            android:label="@string/title_activity_add_platform"
+            android:parentActivityName="com.AridRayne.RetroGuy.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.AridRayne.RetroGuy.MainActivity" />
         </activity>
     </application>
 
