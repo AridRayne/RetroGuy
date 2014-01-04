@@ -58,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private SQLiteDatabase db;
 	private static DatabaseHelper instance;
 	private static Context DBcontext;
+	private List<DatabaseListener> listener;
 	
 	private static final String CREATE_TABLE_PLATFORMS = "CREATE TABLE "
 			+ TABLE_PLATFORMS + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
@@ -93,12 +94,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private DatabaseHelper() {
 		super(DBcontext, DATABASE_NAME, null, DATABASE_VERSION);
 		db = getReadableDatabase();
+		listener = null;
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_PLATFORMS);
 		db.execSQL(CREATE_TABLE_GAMES);
+	}
+	
+	public void addListener(DatabaseListener listener) {
+		this.listener.add(listener);
 	}
 
 	@Override
@@ -152,6 +158,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_PLATFORMS_NAME, platform.getName());
 		values.put(KEY_PLATFORMS_SOUND, platform.getSound());
 		values.put(KEY_THUMBNAIL, platform.getImageFileName());
+		for (DatabaseListener l : listener) {
+			l.onPlatformAdded(platform);
+		}
 		return db.insert(TABLE_PLATFORMS, null, values);
 	}
 	
@@ -221,6 +230,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_GAMES_TITLE, game.getTitle());
 		values.put(KEY_GAMES_YOUTUBE, game.getYoutube());
 		values.put(KEY_THUMBNAIL, game.getImageFileName());
+		for (DatabaseListener l : listener) {
+			l.onGameAdded(game);
+		}
 		return db.insert(TABLE_GAMES, null, values);
 	}
 	
