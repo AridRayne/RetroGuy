@@ -1,4 +1,4 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Fragments;
 
 import roboguice.fragment.RoboSherlockFragment;
 import roboguice.inject.InjectView;
@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.AridRayne.RetroGuy.R;
+import com.AridRayne.RetroGuy.Adapters.TabsAdapter;
+import com.AridRayne.RetroGuy.R.id;
+import com.AridRayne.RetroGuy.R.layout;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;

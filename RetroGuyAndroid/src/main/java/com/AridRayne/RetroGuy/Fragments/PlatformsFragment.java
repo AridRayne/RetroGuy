@@ -1,4 +1,4 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.AridRayne.RetroGuy.DatabaseHelper;
+import com.AridRayne.RetroGuy.R;
+import com.AridRayne.RetroGuy.Adapters.PlatformsGridViewAdapter;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
+import com.AridRayne.RetroGuy.R.id;
+import com.AridRayne.RetroGuy.R.layout;
 
 public class PlatformsFragment extends RoboSherlockFragment {
 	List<RetroGuyPlatform> items;
-	GridViewAdapter adapter;
+	PlatformsGridViewAdapter adapter;
 	DatabaseHelper dbHelper;
 
-	@InjectView (R.id.gridView1) GridView gridView;
+	@InjectView
+	(R.id.gridView1) GridView gridView;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -28,7 +34,7 @@ public class PlatformsFragment extends RoboSherlockFragment {
 		items = new ArrayList<RetroGuyPlatform>();
 		items.addAll(dbHelper.getAllPlatforms());
 		
-		adapter = new GridViewAdapter(getSherlockActivity(), items);
+		adapter = new PlatformsGridViewAdapter(getSherlockActivity(), items);
 		gridView.setAdapter(adapter);
 	}
 

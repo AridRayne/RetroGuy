@@ -1,4 +1,4 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Fragments;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.AridRayne.RetroGuy.R;
+import com.AridRayne.RetroGuy.R.drawable;
+import com.AridRayne.RetroGuy.R.id;
+import com.AridRayne.RetroGuy.R.layout;
 import com.AridRayne.thegamesdb.lib.PlatformList;
 import com.AridRayne.thegamesdb.lib.PlatformListItem;
 import com.AridRayne.thegamesdb.lib.Utilities;

@@ -1,4 +1,4 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Fragments;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +25,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.AridRayne.RetroGuy.DatabaseHelper;
+import com.AridRayne.RetroGuy.ImageDownloader;
+import com.AridRayne.RetroGuy.R;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
+import com.AridRayne.RetroGuy.R.drawable;
+import com.AridRayne.RetroGuy.R.id;
+import com.AridRayne.RetroGuy.R.layout;
 import com.AridRayne.thegamesdb.lib.Data;
 import com.AridRayne.thegamesdb.lib.Platform;
 import com.AridRayne.thegamesdb.lib.Utilities;
@@ -73,7 +79,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 	@Override
  	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.add_platform, container, false);
+		View view = inflater.inflate(R.layout.add_platform_fragment, container, false);
 		return view;
 	}
 

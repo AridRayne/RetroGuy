@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.AridRayne.RetroGuy.Fragments.ViewPagerFragment;
 import com.AridRayne.thegamesdb.lib.Utilities;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -54,12 +55,6 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 			return true;
 		case R.id.action_add:
 			startActivity(new Intent(getApplicationContext(), AddPlatformActivity.class));
-//			getSupportFragmentManager()
-//			.beginTransaction()
-//			.add(R.id.mainFrameLayout, new AddPlatformListFragment())
-//			.hide(vpf)
-//			.addToBackStack(null)
-//			.commit();
 			return true;
 		case android.R.id.home:
 			getSupportFragmentManager().popBackStack();

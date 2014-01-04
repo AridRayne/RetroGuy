@@ -1,4 +1,4 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Adapters;
 
 import java.io.File;
 import java.util.List;
@@ -11,14 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.AridRayne.RetroGuy.R;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
+import com.AridRayne.RetroGuy.R.drawable;
+import com.AridRayne.RetroGuy.R.id;
+import com.AridRayne.RetroGuy.R.layout;
 import com.squareup.picasso.Picasso;
 
-public class GridViewAdapter extends ArrayAdapter<RetroGuyPlatform> {
+public class PlatformsGridViewAdapter extends ArrayAdapter<RetroGuyPlatform> {
 	Context context;
 	List<RetroGuyPlatform> items;
 	
-	public GridViewAdapter(Context context, List<RetroGuyPlatform> data) {
+	public PlatformsGridViewAdapter(Context context, List<RetroGuyPlatform> data) {
 		super(context, R.layout.grid_view_row, data);
 		this.context = context;
 		this.items = data;

@@ -4,6 +4,7 @@ import roboguice.activity.RoboSherlockFragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 
+import com.AridRayne.RetroGuy.Fragments.AddPlatformListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;

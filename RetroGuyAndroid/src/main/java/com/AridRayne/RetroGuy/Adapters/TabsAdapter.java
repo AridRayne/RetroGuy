@@ -1,4 +1,10 @@
-package com.AridRayne.RetroGuy;
+package com.AridRayne.RetroGuy.Adapters;
+import com.AridRayne.RetroGuy.Fragments.FavoritesFragment;
+import com.AridRayne.RetroGuy.Fragments.GamesFragment;
+import com.AridRayne.RetroGuy.Fragments.PlatformsFragment;
+import com.AridRayne.RetroGuy.Fragments.RecentlyAddedFragment;
+import com.AridRayne.RetroGuy.Fragments.RecentlyPlayedFragment;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,19 +21,19 @@ public class TabsAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		switch (position) {
 		case 0: // Favorites
-			return new PlatformsFragment();
+			return new FavoritesFragment();
 
 		case 1: // Recently Added
-			return new PlatformsFragment();
+			return new RecentlyAddedFragment();
 			
 		case 2: // Recently Played
-			return new PlatformsFragment();
+			return new RecentlyPlayedFragment();
 			
 		case 3: // Platforms
 			return new PlatformsFragment();
 			
 		case 4: // Games
-			return new PlatformsFragment();
+			return new GamesFragment();
 			
 		default:
 			return null;
