@@ -1,6 +1,7 @@
 package com.AridRayne.RetroGuy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,11 +12,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.AridRayne.RetroGuy.GamesDB.RetroGuyGame;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
-import com.AridRayne.thegamesdb.lib.Game;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String DATABASE_NAME = "RetroGuy";
 	
 	//Table names.
@@ -54,6 +55,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String KEY_GAMES_PUBLISHER = "publisher";
 	private static final String KEY_GAMES_RELEASE_DATE = "release_date";
 	
+	private SQLiteDatabase db;
+	private static DatabaseHelper instance;
+	private static Context DBcontext;
+	
 	private static final String CREATE_TABLE_PLATFORMS = "CREATE TABLE "
 			+ TABLE_PLATFORMS + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_OVERVIEW + " TEXT," + KEY_DEVELOPER + " TEXT,"
@@ -75,8 +80,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ KEY_GAMES_YOUTUBE + " TEXT," + KEY_GAMES_PUBLISHER + " TEXT,"
 			+ KEY_GAMES_RELEASE_DATE + " TEXT," + KEY_THUMBNAIL + " TEXT)";
 
-	public DatabaseHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	public static synchronized void initialize(Context context) {
+		DBcontext = context;
+	}
+	
+	public static synchronized DatabaseHelper getInstance() {
+		if (instance == null)
+			instance = new DatabaseHelper();
+		return instance;
+	}
+	
+	private DatabaseHelper() {
+		super(DBcontext, DATABASE_NAME, null, DATABASE_VERSION);
+		db = getReadableDatabase();
 	}
 
 	@Override
@@ -92,14 +108,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	public RetroGuyPlatform platformFromCursor(Cursor cursor) {
+		RetroGuyPlatform p = new RetroGuyPlatform();
+		p.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		p.setOverview(cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW)));
+		p.setDeveloper(cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER)));
+		p.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
+		p.setConsole(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE)));
+		p.setController(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER)));
+		p.setCPU(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
+		p.setDisplay(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY)));
+		p.setGraphics(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS)));
+		p.setManufacturer(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER)));
+		p.setMaxControllers(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MAX_CONTROLLERS)));
+		p.setMedia(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEDIA)));
+		p.setMemory(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEMORY)));
+		p.setName(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_NAME)));
+		p.setSound(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_SOUND)));
+		p.setImageFileName(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL)));
+		return p;
+	}
+	
 	public int numPlatforms() {
-		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_PLATFORMS, null);
 		return c.getCount();
 	}
 	
 	public long addPlatform(RetroGuyPlatform platform) {
-		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_ID, platform.getId());
 		values.put(KEY_OVERVIEW, platform.getOverview());
@@ -121,67 +156,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public RetroGuyPlatform getPlatformItem(int id) {
-		SQLiteDatabase db = this.getReadableDatabase();
-		
 		String query = "SELECT * FROM " + TABLE_PLATFORMS + " WHERE " + KEY_ID + " = " + id;
 		Cursor cursor = db.rawQuery(query, null);
 		
 		if (cursor == null || cursor.getCount() == 0)
 			return null;
 		cursor.moveToFirst();
-		RetroGuyPlatform item = new RetroGuyPlatform();
-		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-		item.setOverview(cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW)));
-		item.setDeveloper(cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER)));
-		item.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
-		item.setConsole(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE)));
-		item.setController(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER)));
-		item.setCPU(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
-		item.setDisplay(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY)));
-		item.setGraphics(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS)));
-		item.setManufacturer(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER)));
-		item.setMaxControllers(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MAX_CONTROLLERS)));
-		item.setMedia(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEDIA)));
-		item.setMemory(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEMORY)));
-		item.setName(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_NAME)));
-		item.setSound(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_SOUND)));
-		item.setImageFileName(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL)));
-		return item;
+		return platformFromCursor(cursor);
 	}
 	
 	public List<RetroGuyPlatform> getAllPlatforms() {
 		List<RetroGuyPlatform> platforms = new ArrayList<RetroGuyPlatform>();
-		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLATFORMS, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
-				RetroGuyPlatform p = new RetroGuyPlatform();
-				p.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-				p.setOverview(cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW)));
-				p.setDeveloper(cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER)));
-				p.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
-				p.setConsole(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONSOLE)));
-				p.setController(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CONTROLLER)));
-				p.setCPU(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_CPU)));
-				p.setDisplay(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_DISPLAY)));
-				p.setGraphics(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_GRAPHICS)));
-				p.setManufacturer(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MANUFACTURER)));
-				p.setMaxControllers(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MAX_CONTROLLERS)));
-				p.setMedia(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEDIA)));
-				p.setMemory(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_MEMORY)));
-				p.setName(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_NAME)));
-				p.setSound(cursor.getString(cursor.getColumnIndex(KEY_PLATFORMS_SOUND)));
-				p.setImageFileName(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL)));
-				platforms.add(p);
+				platforms.add(platformFromCursor(cursor));
 			} while (cursor.moveToNext());
 		}
 		
 		return platforms;
 	}
+
+	public RetroGuyGame gameFromCursor(Cursor cursor) {
+		RetroGuyGame item = new RetroGuyGame();
+		item.setCoop(cursor.getString(cursor.getColumnIndex(KEY_GAMES_COOP)));
+		item.setDeveloper(cursor.getString(cursor.getColumnIndex(KEY_DEVELOPER)));
+		item.setEsrb(cursor.getString(cursor.getColumnIndex(KEY_GAMES_ESRB)));
+		item.setGenres(Arrays.asList(StringUtils.split(cursor.getString(cursor.getColumnIndex(KEY_GAMES_GENRES)), ",")));
+		item.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		item.setImageFileName(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL)));
+//		item.setImages(images); //TODO: Figure this out as well.
+		item.setOverview(cursor.getString(cursor.getColumnIndex(KEY_OVERVIEW)));
+		item.setPlatform(cursor.getString(cursor.getColumnIndex(KEY_GAMES_PLATFORM)));
+		item.setPlatformID(cursor.getInt(cursor.getColumnIndex(KEY_GAMES_PLATFORM_ID)));
+		item.setPlayers(cursor.getString(cursor.getColumnIndex(KEY_GAMES_PLAYERS)));
+		item.setPublisher(cursor.getString(cursor.getColumnIndex(KEY_GAMES_PUBLISHER)));
+		item.setRating(cursor.getFloat(cursor.getColumnIndex(KEY_RATING)));
+		item.setReleaseDate(cursor.getString(cursor.getColumnIndex(KEY_GAMES_RELEASE_DATE)));
+		item.setTitle(cursor.getString(cursor.getColumnIndex(KEY_GAMES_TITLE)));
+		item.setYoutube(cursor.getString(cursor.getColumnIndex(KEY_GAMES_YOUTUBE)));
+		return item;		
+	}
 	
-	public long addGame(Game game) {
-		SQLiteDatabase db = this.getWritableDatabase();
+	public int numGames() {
+		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_GAMES, null);
+		return c.getCount();
+	}
+	
+	public long addGame(RetroGuyGame game) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_ID, game.getId());
 		values.put(KEY_OVERVIEW, game.getOverview());
@@ -197,7 +220,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_GAMES_RELEASE_DATE, game.getReleaseDate());
 		values.put(KEY_GAMES_TITLE, game.getTitle());
 		values.put(KEY_GAMES_YOUTUBE, game.getYoutube());
-//		values.put(KEY_THUMBNAIL, )
+		values.put(KEY_THUMBNAIL, game.getImageFileName());
 		return db.insert(TABLE_GAMES, null, values);
 	}
+	
+	public RetroGuyGame getGameItem(int id) {
+		String query = "SELECT * FROM " + TABLE_GAMES + " WHERE " + KEY_ID + " = " + id;
+		Cursor cursor = db.rawQuery(query, null);
+		
+		if (cursor == null || cursor.getCount() == 0)
+			return null;
+		cursor.moveToFirst();
+		return gameFromCursor(cursor);
+	}
+	
+	public List<RetroGuyGame> getAllGames() {
+		List<RetroGuyGame> games = new ArrayList<RetroGuyGame>();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_GAMES, null);
+		
+		if (cursor.moveToFirst()) {
+			do {
+				games.add(gameFromCursor(cursor));
+			} while (cursor.moveToNext());
+		}
+		
+		return games;
+	}
+
 }

@@ -90,7 +90,7 @@ public class AddPlatformFragment extends RoboSherlockFragment {
 			@Override
 			public void onClick(View v) {
 				//TODO: Add some way to let the user know that we're downloading the images. Maybe a progress dialog?
-				DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+				DatabaseHelper dbHelper = DatabaseHelper.getInstance();
 				platform.setName(name.getText().toString());
 				platform.setOverview(overview.getText().toString());
 				platform.setDeveloper(developer.getText().toString());

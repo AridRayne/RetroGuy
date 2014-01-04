@@ -13,9 +13,6 @@ import android.widget.TextView;
 
 import com.AridRayne.RetroGuy.R;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
-import com.AridRayne.RetroGuy.R.drawable;
-import com.AridRayne.RetroGuy.R.id;
-import com.AridRayne.RetroGuy.R.layout;
 import com.squareup.picasso.Picasso;
 
 public class PlatformsGridViewAdapter extends ArrayAdapter<RetroGuyPlatform> {

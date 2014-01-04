@@ -30,6 +30,7 @@ public class MainActivity extends RoboSherlockFragmentActivity {
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		Utilities.getInstance().setUserAccountID(sharedPrefs.getString("gamesDBAccountID", ""));
 	
+		DatabaseHelper.initialize(this);
 		getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameLayout, new ViewPagerFragment()).commit();
 		menu = new SlidingMenu(this);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);

@@ -15,8 +15,6 @@ import com.AridRayne.RetroGuy.DatabaseHelper;
 import com.AridRayne.RetroGuy.R;
 import com.AridRayne.RetroGuy.Adapters.PlatformsGridViewAdapter;
 import com.AridRayne.RetroGuy.GamesDB.RetroGuyPlatform;
-import com.AridRayne.RetroGuy.R.id;
-import com.AridRayne.RetroGuy.R.layout;
 
 public class PlatformsFragment extends RoboSherlockFragment {
 	List<RetroGuyPlatform> items;
@@ -30,7 +28,7 @@ public class PlatformsFragment extends RoboSherlockFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		dbHelper = new DatabaseHelper(getSherlockActivity());
+		dbHelper = DatabaseHelper.getInstance();
 		items = new ArrayList<RetroGuyPlatform>();
 		items.addAll(dbHelper.getAllPlatforms());
 		
